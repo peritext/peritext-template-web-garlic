@@ -1,0 +1,1 @@
+This module is designed to work both in non-routing / SPA environments (as an embedded preview in `peritext-ovide` for instance) and as a views provider for a complete applications (such as `peritext-generator-next`).
