@@ -295,6 +295,8 @@ body
     background: $color-background;
     text-rendering: optimizeLegibility;
     hyphens: none;
+    widows: 3;
+    orphans: 3;
 }
 
 .references-manager
@@ -1003,9 +1005,11 @@ body
             border: none;
 
             @include transition(all .2s ease);
+            opacity: .5;
             &:hover
             {
-                font-weight: 700;
+                // font-weight: 700;
+                opacity: 1;
             }
         }
         .nav-title
