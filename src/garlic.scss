@@ -1300,6 +1300,18 @@ body
         {
             padding: $gutter-medium;
         }
+        .pdf-page-input{
+            display: inline;
+            outline: none;
+            border: none;
+            font-family: inherit;
+            width: $gutter-large;
+            @extend .interactive-item-intent;
+            &:hover,
+            &:focus{
+                @extend .interactive-item-active;
+            }
+        }
     }
     .pdf-player-container
     {
@@ -1307,6 +1319,13 @@ body
         canvas
         {
             display: inline-block;
+        }
+
+        .pdf-player,
+        .pdf-page
+        {
+            max-width: 100%;
+
         }
     }
     // small components: fixs

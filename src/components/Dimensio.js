@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 let ReactPDF;
+let PDFDocument;
+let PDFPage;
 import EpubPlayerWrapper from './EpubPlayerWrapper';
 
 import Layout from './Layout';
@@ -10,17 +12,93 @@ const isBrowser=new Function("try {return this===window;}catch(e){ return false;
 const inBrowser = isBrowser();
 
 if (inBrowser) {
-  ReactPDF = require('react-pdf');
+  ReactPDF = require('react-pdf/build/entry.webpack');
+  PDFDocument = ReactPDF.Document;
+  PDFPage = ReactPDF.Page;
 }
 
-export default class Dimensio extends Component {
+class ControlledInput extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: props.value || ''
+    }
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    if (nextProps.value !== this.state.value) {
+      this.setState({
+        value: nextProps.value
+      })
+    }
+  }
+
+  onChange = e => {
+    const value = e.target.value;
+    this.setState({value});
+  }
+
+  onBlur = () => {
+    this.props.onChange(this.state.value);
+  }
+
+  onKeyUp = e => {
+    if (e.key === 'Enter') {
+      this.props.onChange(this.state.value);
+    } else {
+      this.props.onKeyUp(e);
+    }
+  }
+
+  render = () => {
+    const {
+      value
+    } = this.state;
+    const {
+      onKeyUp
+    } = this.props;
+    return (
+      <input 
+        className="pdf-page-input" 
+        type="text" 
+        value={value} 
+        onKeyUp={this.onKeyUp}
+        onChange={this.onChange}
+        onBlur={this.onBlur}
+      />
+    )
+  }
+}
+
+class Dimensio extends Component {
   constructor(props) {
     super(props);
     this.state = {
       pdfPageNumber: 1,
       pdfTotal: 1,
-      pdfPageIndex: 0,
       epubLocation: 0,
+      pdfWidth: 100
+    }
+  }
+
+  componentDidUpdate = (prevProps, prevState, prevContext) => {
+    const {
+      context: {
+        dimensions: {
+          width
+        }
+      }
+    } = this;
+    const {
+      dimensions: {
+        width: prevWidth
+      }
+    } = prevContext;
+    if (prevWidth !== width) {
+      const parentDiv = document.getElementById('pdf-container');
+      this.setState({ 
+        pdfWidth: parentDiv.clientWidth
+      });
     }
   }
 
@@ -30,51 +108,68 @@ export default class Dimensio extends Component {
     });
   }
 
-  onPdfDocumentLoad = ({ total }) => {
+  onPdfDocumentLoadSuccess = ({numPages}) => {
     this.setState({
-      pdfTotal: total
+      pdfTotal: numPages
     })
   }
 
-  onPdfPageLoad = ({pageIndex, pageNumber}) => {
+  onPdfPageLoadSuccess = ({pageIndex}) => {
+    const parentDiv = document.getElementById('pdf-container');
     this.setState({ 
-      pdfPageIndex: pageIndex, 
-      pdfPageNumber: pageNumber 
+      pdfPageNumber: pageIndex + 1,
+      pdfWidth: parentDiv.clientWidth
     });
   }
 
   onPdfPrev = () => {
     const {
-      pdfPageIndex,
       pdfPageNumber
     } = this.state;
     this.setState({ 
-      pdfPageIndex: pdfPageIndex > 0 ? pdfPageIndex - 1 : pdfPageIndex, 
       pdfPageNumber: pdfPageNumber > 0 ? pdfPageNumber - 1 : pdfPageNumber 
     });
   }
 
   onPdfNext = () => {
     const {
-      pdfPageIndex,
       pdfPageNumber,
       pdfTotal,
     } = this.state;
     this.setState({ 
-      pdfPageIndex: pdfPageIndex < pdfTotal - 1 ? pdfPageIndex + 1 : pdfPageIndex, 
       pdfPageNumber: pdfPageNumber < pdfTotal ? pdfPageNumber + 1 : pdfPageNumber 
     });
+  }
+
+  onPdfPageInput = txt => {
+    const number = +txt;
+    if (!Number.isNaN(number) && number >= 1 && number <= this.state.pdfTotal) {
+      this.setState({ 
+        pdfPageNumber: number
+      });
+    }
+  }
+
+  onPdfPageInputKeyUp = e => {
+    const code = e.key;
+    if (code === 'ArrowUp') {
+      this.onPdfNext();
+    }else if (code === 'ArrowDown') {
+      this.onPdfPrev();
+    }
   }
 
   render() {
     const {
       state,
       props,
-      onPdfDocumentLoad,
-      onPdfPageLoad,
+      onPdfDocumentLoadSuccess,
+      onPdfPageLoadSuccess,
       onPdfPrev,
       onPdfNext,
       onEpubLocationChange,
+      onPdfPageInput,
+      onPdfPageInputKeyUp,
       context: {
         locale
       }
@@ -89,28 +184,48 @@ export default class Dimensio extends Component {
     const {
       pdfPageNumber,
       pdfTotal,
-      pdfPageIndex,
-      epubLocation
+      epubLocation,
+      pdfWidth
     } = state;
 
 
     return (
-      <Layout activeId="dimensio">
         <section className="main-contents-container">
           {inBrowser && <div className="contents-guttered">
             {pdfUrl && 
               <div className="output-group">
                 <h2>{(locale && locale.pdfFormat) || 'Format pdf'}</h2>
-                <div className="player-container pdf-player-container">
+                <div 
+                  className="player-container pdf-player-container"
+                  id="pdf-container"
+                >
                   <p className="pdf-nav">
-                    <button onClick={onPdfPrev}>{(locale && locale.prevPage) || 'page précédente'}</button> <span>{pdfPageNumber} {(locale && locale.of) || 'de'} {pdfTotal}</span> <button onClick={onPdfNext}>{(locale && locale.nextPage) || 'page suivante'}</button>
+                    <button onClick={onPdfPrev}>{(locale && locale.prevPage) || 'page précédente'}</button> 
+                      <span>
+                        <ControlledInput 
+                          className="pdf-page-input" 
+                          type="text" 
+                          value={pdfPageNumber} 
+                          onChange={onPdfPageInput} 
+                          onKeyUp={onPdfPageInputKeyUp}
+                        />
+                       {(locale && locale.of) || 'de'} {pdfTotal}</span> 
+                    <button onClick={onPdfNext}>{(locale && locale.nextPage) || 'page suivante'}</button>
                   </p>
-                  <ReactPDF
+                  <PDFDocument
                       file={pdfUrl}
-                      pageIndex={pdfPageIndex}
-                      onDocumentLoad={onPdfDocumentLoad}
-                      onPageLoad={this.onPageLoad}
-                  />
+                      onLoadSuccess={onPdfDocumentLoadSuccess}
+                      loading={locale.loadingPdf || 'chargement du pdf ...'}
+                      noData={locale.noPdf || 'pas de pdf à afficher ...'}
+                      className="pdf-player"
+                  >
+                    <PDFPage 
+                      className="pdf-page"
+                      pageNumber={pdfPageNumber}
+                      onLoadSuccess={onPdfPageLoadSuccess}
+                      width={pdfWidth}
+                    />
+                  </PDFDocument>
                   <p>
                     <a className="download-button" href={pdfUrl} download>{(locale && locale.download) || 'télécharger'}</a>
                   </p>
@@ -142,11 +257,31 @@ export default class Dimensio extends Component {
             </div>}
           </div>}
         </section>
-      </Layout>
     )
   }
 }
 
 Dimensio.contextTypes = {
   locale: PropTypes.object,
+  dimensions: PropTypes.object,
 }
+
+
+export default ({
+  id, 
+  query,
+  pdfUrl,
+  epubUrl,
+  storyTitle,
+  jsonUrl,
+}) => (
+  <Layout activeId='dimensio'>
+    <Dimensio 
+      sectionId={id}  
+      pdfUrl={pdfUrl}
+      epubUrl={epubUrl}
+      storyTitle={storyTitle}
+      jsonUrl={jsonUrl}
+    />
+  </Layout>
+)

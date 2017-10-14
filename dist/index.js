@@ -1047,7 +1047,7 @@ var Contents = function (_Component) {
             })
           ),
           story.metadata.description && _react2.default.createElement(
-            'blockquote',
+            'div',
             { className: 'story-description' },
             story.metadata.description
           ),
