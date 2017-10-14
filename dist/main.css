@@ -177,11 +177,11 @@
 .interactive-item {
   cursor: pointer; }
 
-.interactive-item-intent {
+.interactive-item-intent, .garlic-layout .pdf-nav .pdf-page-input {
   color: #414e4d;
   background: #dddbd9; }
 
-.interactive-item-active {
+.interactive-item-active, .garlic-layout .pdf-nav .pdf-page-input:hover, .garlic-layout .pdf-nav .pdf-page-input:focus {
   color: #333;
   background: #d6cfc4; }
 
@@ -809,10 +809,19 @@ body {
       background: #f32e36; }
   .garlic-layout .pdf-nav span {
     padding: 1.3328rem; }
+  .garlic-layout .pdf-nav .pdf-page-input {
+    display: inline;
+    outline: none;
+    border: none;
+    font-family: inherit;
+    width: 3.9984rem; }
   .garlic-layout .pdf-player-container {
     text-align: center; }
     .garlic-layout .pdf-player-container canvas {
       display: inline-block; }
+    .garlic-layout .pdf-player-container .pdf-player,
+    .garlic-layout .pdf-player-container .pdf-page {
+      max-width: 100%; }
   .garlic-layout a:link,
   .garlic-layout a:visited,
   .garlic-layout .link,

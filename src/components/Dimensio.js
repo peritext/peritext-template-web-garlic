@@ -82,19 +82,9 @@ class Dimensio extends Component {
   }
 
   componentDidUpdate = (prevProps, prevState, prevContext) => {
-    const {
-      context: {
-        dimensions: {
-          width
-        }
-      }
-    } = this;
-    const {
-      dimensions: {
-        width: prevWidth
-      }
-    } = prevContext;
-    if (prevWidth !== width) {
+    const width = this.context && this.context.dimensions && this.context.dimensions.width;
+    const prevWidth = prevContext && prevContext.dimensions && prevContext.dimensions.width;
+    if (width && prevWidth && prevWidth !== width) {
       const parentDiv = document.getElementById('pdf-container');
       this.setState({ 
         pdfWidth: parentDiv.clientWidth
@@ -215,8 +205,8 @@ class Dimensio extends Component {
                   <PDFDocument
                       file={pdfUrl}
                       onLoadSuccess={onPdfDocumentLoadSuccess}
-                      loading={locale.loadingPdf || 'chargement du pdf ...'}
-                      noData={locale.noPdf || 'pas de pdf à afficher ...'}
+                      loading={(locale && locale.loadingPdf) || 'chargement du pdf ...'}
+                      noData={(locale && locale.noPdf) || 'pas de pdf à afficher ...'}
                       className="pdf-player"
                   >
                     <PDFPage 

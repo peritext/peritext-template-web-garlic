@@ -1343,7 +1343,14 @@ exports.default = function (_ref) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = undefined;
+
+var _isNan = __webpack_require__(35);
+
+var _isNan2 = _interopRequireDefault(_isNan);
+
+var _createClass2 = __webpack_require__(6);
+
+var _createClass3 = _interopRequireDefault(_createClass2);
 
 var _getPrototypeOf = __webpack_require__(2);
 
@@ -1352,10 +1359,6 @@ var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 var _classCallCheck2 = __webpack_require__(3);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _createClass2 = __webpack_require__(6);
-
-var _createClass3 = _interopRequireDefault(_createClass2);
 
 var _possibleConstructorReturn2 = __webpack_require__(4);
 
@@ -1373,7 +1376,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _EpubPlayerWrapper = __webpack_require__(35);
+var _EpubPlayerWrapper = __webpack_require__(36);
 
 var _EpubPlayerWrapper2 = _interopRequireDefault(_EpubPlayerWrapper);
 
@@ -1384,77 +1387,161 @@ var _Layout2 = _interopRequireDefault(_Layout);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ReactPDF = void 0;
+var PDFDocument = void 0;
+var PDFPage = void 0;
 
 
 var isBrowser = new Function("try {return this===window;}catch(e){ return false;}");
 var inBrowser = isBrowser();
 
 if (inBrowser) {
-  ReactPDF = __webpack_require__(37);
+  ReactPDF = __webpack_require__(38);
+  PDFDocument = ReactPDF.Document;
+  PDFPage = ReactPDF.Page;
 }
 
-var Dimensio = function (_Component) {
-  (0, _inherits3.default)(Dimensio, _Component);
+var ControlledInput = function (_Component) {
+  (0, _inherits3.default)(ControlledInput, _Component);
 
-  function Dimensio(props) {
-    (0, _classCallCheck3.default)(this, Dimensio);
+  function ControlledInput(props) {
+    (0, _classCallCheck3.default)(this, ControlledInput);
 
-    var _this = (0, _possibleConstructorReturn3.default)(this, (Dimensio.__proto__ || (0, _getPrototypeOf2.default)(Dimensio)).call(this, props));
+    var _this = (0, _possibleConstructorReturn3.default)(this, (ControlledInput.__proto__ || (0, _getPrototypeOf2.default)(ControlledInput)).call(this, props));
 
-    _this.onEpubLocationChange = function (epubLocation) {
-      _this.setState({
-        epubLocation: epubLocation
-      });
+    _this.componentWillReceiveProps = function (nextProps) {
+      if (nextProps.value !== _this.state.value) {
+        _this.setState({
+          value: nextProps.value
+        });
+      }
     };
 
-    _this.onPdfDocumentLoad = function (_ref) {
-      var total = _ref.total;
-
-      _this.setState({
-        pdfTotal: total
-      });
+    _this.onChange = function (e) {
+      var value = e.target.value;
+      _this.setState({ value: value });
     };
 
-    _this.onPdfPageLoad = function (_ref2) {
-      var pageIndex = _ref2.pageIndex,
-          pageNumber = _ref2.pageNumber;
-
-      _this.setState({
-        pdfPageIndex: pageIndex,
-        pdfPageNumber: pageNumber
-      });
+    _this.onBlur = function () {
+      _this.props.onChange(_this.state.value);
     };
 
-    _this.onPdfPrev = function () {
-      var _this$state = _this.state,
-          pdfPageIndex = _this$state.pdfPageIndex,
-          pdfPageNumber = _this$state.pdfPageNumber;
-
-      _this.setState({
-        pdfPageIndex: pdfPageIndex > 0 ? pdfPageIndex - 1 : pdfPageIndex,
-        pdfPageNumber: pdfPageNumber > 0 ? pdfPageNumber - 1 : pdfPageNumber
-      });
+    _this.onKeyUp = function (e) {
+      if (e.key === 'Enter') {
+        _this.props.onChange(_this.state.value);
+      } else {
+        _this.props.onKeyUp(e);
+      }
     };
 
-    _this.onPdfNext = function () {
-      var _this$state2 = _this.state,
-          pdfPageIndex = _this$state2.pdfPageIndex,
-          pdfPageNumber = _this$state2.pdfPageNumber,
-          pdfTotal = _this$state2.pdfTotal;
+    _this.render = function () {
+      var value = _this.state.value;
+      var onKeyUp = _this.props.onKeyUp;
 
-      _this.setState({
-        pdfPageIndex: pdfPageIndex < pdfTotal - 1 ? pdfPageIndex + 1 : pdfPageIndex,
-        pdfPageNumber: pdfPageNumber < pdfTotal ? pdfPageNumber + 1 : pdfPageNumber
+      return _react2.default.createElement('input', {
+        className: 'pdf-page-input',
+        type: 'text',
+        value: value,
+        onKeyUp: _this.onKeyUp,
+        onChange: _this.onChange,
+        onBlur: _this.onBlur
       });
     };
 
     _this.state = {
-      pdfPageNumber: 1,
-      pdfTotal: 1,
-      pdfPageIndex: 0,
-      epubLocation: 0
+      value: props.value || ''
     };
     return _this;
+  }
+
+  return ControlledInput;
+}(_react.Component);
+
+var Dimensio = function (_Component2) {
+  (0, _inherits3.default)(Dimensio, _Component2);
+
+  function Dimensio(props) {
+    (0, _classCallCheck3.default)(this, Dimensio);
+
+    var _this2 = (0, _possibleConstructorReturn3.default)(this, (Dimensio.__proto__ || (0, _getPrototypeOf2.default)(Dimensio)).call(this, props));
+
+    _this2.componentDidUpdate = function (prevProps, prevState, prevContext) {
+      var width = _this2.context && _this2.context.dimensions && _this2.context.dimensions.width;
+      var prevWidth = prevContext && prevContext.dimensions && prevContext.dimensions.width;
+      if (width && prevWidth && prevWidth !== width) {
+        var parentDiv = document.getElementById('pdf-container');
+        _this2.setState({
+          pdfWidth: parentDiv.clientWidth
+        });
+      }
+    };
+
+    _this2.onEpubLocationChange = function (epubLocation) {
+      _this2.setState({
+        epubLocation: epubLocation
+      });
+    };
+
+    _this2.onPdfDocumentLoadSuccess = function (_ref) {
+      var numPages = _ref.numPages;
+
+      _this2.setState({
+        pdfTotal: numPages
+      });
+    };
+
+    _this2.onPdfPageLoadSuccess = function (_ref2) {
+      var pageIndex = _ref2.pageIndex;
+
+      var parentDiv = document.getElementById('pdf-container');
+      _this2.setState({
+        pdfPageNumber: pageIndex + 1,
+        pdfWidth: parentDiv.clientWidth
+      });
+    };
+
+    _this2.onPdfPrev = function () {
+      var pdfPageNumber = _this2.state.pdfPageNumber;
+
+      _this2.setState({
+        pdfPageNumber: pdfPageNumber > 0 ? pdfPageNumber - 1 : pdfPageNumber
+      });
+    };
+
+    _this2.onPdfNext = function () {
+      var _this2$state = _this2.state,
+          pdfPageNumber = _this2$state.pdfPageNumber,
+          pdfTotal = _this2$state.pdfTotal;
+
+      _this2.setState({
+        pdfPageNumber: pdfPageNumber < pdfTotal ? pdfPageNumber + 1 : pdfPageNumber
+      });
+    };
+
+    _this2.onPdfPageInput = function (txt) {
+      var number = +txt;
+      if (!(0, _isNan2.default)(number) && number >= 1 && number <= _this2.state.pdfTotal) {
+        _this2.setState({
+          pdfPageNumber: number
+        });
+      }
+    };
+
+    _this2.onPdfPageInputKeyUp = function (e) {
+      var code = e.key;
+      if (code === 'ArrowUp') {
+        _this2.onPdfNext();
+      } else if (code === 'ArrowDown') {
+        _this2.onPdfPrev();
+      }
+    };
+
+    _this2.state = {
+      pdfPageNumber: 1,
+      pdfTotal: 1,
+      epubLocation: 0,
+      pdfWidth: 100
+    };
+    return _this2;
   }
 
   (0, _createClass3.default)(Dimensio, [{
@@ -1462,11 +1549,13 @@ var Dimensio = function (_Component) {
     value: function render() {
       var state = this.state,
           props = this.props,
-          onPdfDocumentLoad = this.onPdfDocumentLoad,
-          onPdfPageLoad = this.onPdfPageLoad,
+          onPdfDocumentLoadSuccess = this.onPdfDocumentLoadSuccess,
+          onPdfPageLoadSuccess = this.onPdfPageLoadSuccess,
           onPdfPrev = this.onPdfPrev,
           onPdfNext = this.onPdfNext,
           onEpubLocationChange = this.onEpubLocationChange,
+          onPdfPageInput = this.onPdfPageInput,
+          onPdfPageInputKeyUp = this.onPdfPageInputKeyUp,
           locale = this.context.locale;
       var pdfUrl = props.pdfUrl,
           epubUrl = props.epubUrl,
@@ -1474,119 +1563,131 @@ var Dimensio = function (_Component) {
           jsonUrl = props.jsonUrl;
       var pdfPageNumber = state.pdfPageNumber,
           pdfTotal = state.pdfTotal,
-          pdfPageIndex = state.pdfPageIndex,
-          epubLocation = state.epubLocation;
+          epubLocation = state.epubLocation,
+          pdfWidth = state.pdfWidth;
 
 
       return _react2.default.createElement(
-        _Layout2.default,
-        { activeId: 'dimensio' },
-        _react2.default.createElement(
-          'section',
-          { className: 'main-contents-container' },
-          inBrowser && _react2.default.createElement(
+        'section',
+        { className: 'main-contents-container' },
+        inBrowser && _react2.default.createElement(
+          'div',
+          { className: 'contents-guttered' },
+          pdfUrl && _react2.default.createElement(
             'div',
-            { className: 'contents-guttered' },
-            pdfUrl && _react2.default.createElement(
+            { className: 'output-group' },
+            _react2.default.createElement(
+              'h2',
+              null,
+              locale && locale.pdfFormat || 'Format pdf'
+            ),
+            _react2.default.createElement(
               'div',
-              { className: 'output-group' },
+              {
+                className: 'player-container pdf-player-container',
+                id: 'pdf-container'
+              },
               _react2.default.createElement(
-                'h2',
-                null,
-                locale && locale.pdfFormat || 'Format pdf'
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'player-container pdf-player-container' },
+                'p',
+                { className: 'pdf-nav' },
                 _react2.default.createElement(
-                  'p',
-                  { className: 'pdf-nav' },
-                  _react2.default.createElement(
-                    'button',
-                    { onClick: onPdfPrev },
-                    locale && locale.prevPage || 'page précédente'
-                  ),
-                  ' ',
-                  _react2.default.createElement(
-                    'span',
-                    null,
-                    pdfPageNumber,
-                    ' ',
-                    locale && locale.of || 'de',
-                    ' ',
-                    pdfTotal
-                  ),
-                  ' ',
-                  _react2.default.createElement(
-                    'button',
-                    { onClick: onPdfNext },
-                    locale && locale.nextPage || 'page suivante'
-                  )
+                  'button',
+                  { onClick: onPdfPrev },
+                  locale && locale.prevPage || 'page précédente'
                 ),
-                _react2.default.createElement(ReactPDF, {
+                _react2.default.createElement(
+                  'span',
+                  null,
+                  _react2.default.createElement(ControlledInput, {
+                    className: 'pdf-page-input',
+                    type: 'text',
+                    value: pdfPageNumber,
+                    onChange: onPdfPageInput,
+                    onKeyUp: onPdfPageInputKeyUp
+                  }),
+                  locale && locale.of || 'de',
+                  ' ',
+                  pdfTotal
+                ),
+                _react2.default.createElement(
+                  'button',
+                  { onClick: onPdfNext },
+                  locale && locale.nextPage || 'page suivante'
+                )
+              ),
+              _react2.default.createElement(
+                PDFDocument,
+                {
                   file: pdfUrl,
-                  pageIndex: pdfPageIndex,
-                  onDocumentLoad: onPdfDocumentLoad,
-                  onPageLoad: this.onPageLoad
-                }),
-                _react2.default.createElement(
-                  'p',
-                  null,
-                  _react2.default.createElement(
-                    'a',
-                    { className: 'download-button', href: pdfUrl, download: true },
-                    locale && locale.download || 'télécharger'
-                  )
-                )
-              )
-            ),
-            epubUrl && _react2.default.createElement(
-              'div',
-              { className: 'output-group' },
-              _react2.default.createElement(
-                'h2',
-                null,
-                locale && locale.epubFormat || 'Format epub'
+                  onLoadSuccess: onPdfDocumentLoadSuccess,
+                  loading: locale && locale.loadingPdf || 'chargement du pdf ...',
+                  noData: locale && locale.noPdf || 'pas de pdf à afficher ...',
+                  className: 'pdf-player'
+                },
+                _react2.default.createElement(PDFPage, {
+                  className: 'pdf-page',
+                  pageNumber: pdfPageNumber,
+                  onLoadSuccess: onPdfPageLoadSuccess,
+                  width: pdfWidth
+                })
               ),
               _react2.default.createElement(
-                'div',
-                { className: 'player-container epub-player-container' },
-                _react2.default.createElement(_EpubPlayerWrapper2.default, {
-                  url: epubUrl,
-                  onEpubLocationChange: onEpubLocationChange,
-                  storyTitle: storyTitle,
-                  epubLocation: epubLocation
-                }),
+                'p',
+                null,
                 _react2.default.createElement(
-                  'p',
-                  null,
-                  _react2.default.createElement(
-                    'a',
-                    { className: 'download-button', href: epubUrl, download: true },
-                    locale && locale.download || 'télécharger'
-                  )
+                  'a',
+                  { className: 'download-button', href: pdfUrl, download: true },
+                  locale && locale.download || 'télécharger'
                 )
               )
+            )
+          ),
+          epubUrl && _react2.default.createElement(
+            'div',
+            { className: 'output-group' },
+            _react2.default.createElement(
+              'h2',
+              null,
+              locale && locale.epubFormat || 'Format epub'
             ),
-            epubUrl && _react2.default.createElement(
+            _react2.default.createElement(
               'div',
-              { className: 'output-group' },
+              { className: 'player-container epub-player-container' },
+              _react2.default.createElement(_EpubPlayerWrapper2.default, {
+                url: epubUrl,
+                onEpubLocationChange: onEpubLocationChange,
+                storyTitle: storyTitle,
+                epubLocation: epubLocation
+              }),
               _react2.default.createElement(
-                'h2',
+                'p',
                 null,
-                locale && locale.jsonFormat || 'Format json'
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'player-container' },
                 _react2.default.createElement(
-                  'p',
-                  null,
-                  _react2.default.createElement(
-                    'a',
-                    { className: 'download-button', href: jsonUrl, download: true },
-                    locale && locale.download || 'télécharger'
-                  )
+                  'a',
+                  { className: 'download-button', href: epubUrl, download: true },
+                  locale && locale.download || 'télécharger'
+                )
+              )
+            )
+          ),
+          epubUrl && _react2.default.createElement(
+            'div',
+            { className: 'output-group' },
+            _react2.default.createElement(
+              'h2',
+              null,
+              locale && locale.jsonFormat || 'Format json'
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'player-container' },
+              _react2.default.createElement(
+                'p',
+                null,
+                _react2.default.createElement(
+                  'a',
+                  { className: 'download-button', href: jsonUrl, download: true },
+                  locale && locale.download || 'télécharger'
                 )
               )
             )
@@ -1598,11 +1699,29 @@ var Dimensio = function (_Component) {
   return Dimensio;
 }(_react.Component);
 
-exports.default = Dimensio;
-
-
 Dimensio.contextTypes = {
-  locale: _propTypes2.default.object
+  locale: _propTypes2.default.object,
+  dimensions: _propTypes2.default.object
+};
+
+exports.default = function (_ref3) {
+  var id = _ref3.id,
+      query = _ref3.query,
+      pdfUrl = _ref3.pdfUrl,
+      epubUrl = _ref3.epubUrl,
+      storyTitle = _ref3.storyTitle,
+      jsonUrl = _ref3.jsonUrl;
+  return _react2.default.createElement(
+    _Layout2.default,
+    { activeId: 'dimensio' },
+    _react2.default.createElement(Dimensio, {
+      sectionId: id,
+      pdfUrl: pdfUrl,
+      epubUrl: epubUrl,
+      storyTitle: storyTitle,
+      jsonUrl: jsonUrl
+    })
+  );
 };
 
 /***/ }),
@@ -1616,7 +1735,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _objectWithoutProperties2 = __webpack_require__(38);
+var _objectWithoutProperties2 = __webpack_require__(39);
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
@@ -1819,11 +1938,11 @@ var _Layout = __webpack_require__(9);
 
 var _Layout2 = _interopRequireDefault(_Layout);
 
-var _RelatedContexts = __webpack_require__(39);
+var _RelatedContexts = __webpack_require__(40);
 
 var _RelatedContexts2 = _interopRequireDefault(_RelatedContexts);
 
-var _NotesContainer = __webpack_require__(40);
+var _NotesContainer = __webpack_require__(41);
 
 var _NotesContainer2 = _interopRequireDefault(_NotesContainer);
 
@@ -1841,7 +1960,7 @@ var isBrowser = new Function("try {return this===window;}catch(e){ return false;
 var inBrowser = isBrowser();
 var Comments = void 0;
 if (inBrowser) {
-  Comments = __webpack_require__(42).default;
+  Comments = __webpack_require__(43).default;
 }
 
 var Contents = (_temp = _class = function (_Component) {
@@ -2370,7 +2489,7 @@ var _Section = __webpack_require__(20);
 
 var _Section2 = _interopRequireDefault(_Section);
 
-var _PreviewLink = __webpack_require__(44);
+var _PreviewLink = __webpack_require__(45);
 
 var _PreviewLink2 = _interopRequireDefault(_PreviewLink);
 
@@ -3198,6 +3317,12 @@ module.exports = require("react-addons-css-transition-group");
 
 /***/ }),
 /* 35 */
+/***/ (function(module, exports) {
+
+module.exports = require("babel-runtime/core-js/number/is-nan");
+
+/***/ }),
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3232,7 +3357,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactReader = __webpack_require__(36);
+var _reactReader = __webpack_require__(37);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3325,25 +3450,25 @@ var EpubPlayerWrapper = function (_Component) {
 exports.default = EpubPlayerWrapper;
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-reader");
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports) {
 
-module.exports = require("react-pdf");
+module.exports = require("react-pdf/build/entry.webpack");
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports) {
 
 module.exports = require("babel-runtime/helpers/objectWithoutProperties");
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3476,7 +3601,7 @@ RelatedContexts.contextTypes = {
 exports.default = RelatedContexts;
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3514,7 +3639,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _NoteItem = __webpack_require__(41);
+var _NoteItem = __webpack_require__(42);
 
 var _NoteItem2 = _interopRequireDefault(_NoteItem);
 
@@ -3747,7 +3872,7 @@ NotesContainer.contextTypes = {
 exports.default = NotesContainer;
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3893,7 +4018,7 @@ NoteItem.contextTypes = {
 exports.default = NoteItem;
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3937,7 +4062,7 @@ var isBrowser = new Function("try {return this===window;}catch(e){ return false;
 var inBrowser = isBrowser();
 var ReactDisqusComments = void 0;
 if (inBrowser) {
-  ReactDisqusComments = __webpack_require__(43).default;
+  ReactDisqusComments = __webpack_require__(44).default;
 } else {
   ReactDisqusComments = _react2.default.createElement('div', null);
 }
@@ -4022,13 +4147,13 @@ ReactDisqusWrapper.propTypes = {
 exports.default = ReactDisqusWrapper;
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-disqus");
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
