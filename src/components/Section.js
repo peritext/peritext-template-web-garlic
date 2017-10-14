@@ -50,11 +50,19 @@ class Contents extends Component {
   componentDidMount() {
     if (this.props.query.contextualizationId) {
       this.context.scrollToElementId(this.props.query.contextualizationId);
+    } else if (this.props.query.blockId) {
+      this.context.scrollToElementId(this.props.query.blockId);
     }
     if (this.props.query) {
-      setTimeout(() =>
-        this.context.scrollToElementId(this.props.query.contextualizationId)
-        , 2000);
+      setTimeout(() => {
+        if (this.props.query.contextualizationId) {
+          console.log('scroll to contextualization id');
+          this.context.scrollToElementId(this.props.query.contextualizationId);
+        } else if (this.props.query.blockId) {
+          console.log('scroll to block id');
+          this.context.scrollToElementId(this.props.query.blockId);
+        }
+      } , 3000);
     }
   }
 
