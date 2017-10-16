@@ -217,13 +217,6 @@
   color: #fdfff8;
   background: #f32e36; }
 
-body {
-  background: #fdfff8;
-  text-rendering: optimizeLegibility;
-  hyphens: none;
-  widows: 3;
-  orphans: 3; }
-
 /**
  * Animations
  */
@@ -257,7 +250,12 @@ body {
   font-size: 1.408rem;
   position: relative;
   color: #414e4d;
+  text-align: justify;
   background: #fdfff8;
+  text-rendering: optimizeLegibility;
+  hyphens: none;
+  widows: 3;
+  orphans: 3;
   /**
    * Index / summary
    */
@@ -272,8 +270,8 @@ body {
     .garlic-layout .section-player .notes-container {
       z-index: 3; }
       .garlic-layout .section-player .notes-container.notes-container-position-aside {
-        left: 3%;
-        width: 22.5%; }
+        left: 4%;
+        width: 13%; }
     .garlic-layout .section-player footer {
       position: absolute;
       bottom: 0;
@@ -320,7 +318,7 @@ body {
         overflow: auto;
         max-width: 100%;
         margin-right: 18%;
-        margin-left: 27%;
+        margin-left: 18%;
         box-shadow: 0 0 5px #e7eae1; }
         .garlic-layout .section-player .BlockAssetWrapper .peritext-contextualization-block iframe {
           width: 100%;
@@ -330,7 +328,7 @@ body {
           border: none; }
       .garlic-layout .section-player .BlockAssetWrapper .peritext-contextualization-block + figcaption {
         margin-right: 20%;
-        margin-left: 30%; }
+        margin-left: 20%; }
       .garlic-layout .section-player .BlockAssetWrapper.fixed {
         z-index: 4; }
         .garlic-layout .section-player .BlockAssetWrapper.fixed .peritext-contextualizer-video iframe {
@@ -519,7 +517,7 @@ body {
     .garlic-layout .contents-wrapper .main-contents-container .home-header {
       margin-top: 1.3328rem;
       margin-right: 20%;
-      margin-left: 30%;
+      margin-left: 20%;
       text-align: center; }
       .garlic-layout .contents-wrapper .main-contents-container .home-header.hidden {
         display: none; }
@@ -547,29 +545,33 @@ body {
         border-bottom: none; }
     .garlic-layout .contents-wrapper .main-contents-container .contents-guttered {
       margin-right: 20%;
-      margin-left: 30%; }
+      margin-left: 20%; }
       .garlic-layout .contents-wrapper .main-contents-container .contents-guttered p {
         font-size: 1.408rem;
         line-height: 1.9712rem; }
     .garlic-layout .contents-wrapper .main-contents-container footer {
-      left: 30%;
-      width: 50%; }
+      left: 20%;
+      width: 60%; }
     .garlic-layout .contents-wrapper .main-contents-container .section-title {
       font-family: Roboto, serif;
       font-size: 5.76717rem;
       margin-top: 0;
       margin-right: 20%;
-      margin-left: 30%; }
+      margin-left: 20%; }
     .garlic-layout .contents-wrapper .main-contents-container > div {
       position: relative; }
       .garlic-layout .contents-wrapper .main-contents-container > div > h1, .garlic-layout .contents-wrapper .main-contents-container > div > h2, .garlic-layout .contents-wrapper .main-contents-container > div > h3, .garlic-layout .contents-wrapper .main-contents-container > div > h4, .garlic-layout .contents-wrapper .main-contents-container > div > h5, .garlic-layout .contents-wrapper .main-contents-container > div > h6, .garlic-layout .contents-wrapper .main-contents-container > div > p, .garlic-layout .contents-wrapper .main-contents-container > div > ul, .garlic-layout .contents-wrapper .main-contents-container > div > ol, .garlic-layout .contents-wrapper .main-contents-container > div > blockquote, .garlic-layout .contents-wrapper .main-contents-container > div > pre {
         margin-right: 20%;
-        margin-left: 30%; }
+        margin-left: 20%; }
+      .garlic-layout .contents-wrapper .main-contents-container > div p,
+      .garlic-layout .contents-wrapper .main-contents-container > div li {
+        line-height: 1.6em; }
   .garlic-layout nav {
     font-family: Roboto, serif;
     z-index: 5;
-    width: 30%;
+    width: 20%;
     height: 100%;
+    font-size: 1.408rem;
     user-select: none;
     pointer-events: none;
     background: transparent; }
@@ -632,7 +634,6 @@ body {
         max-height: 100%;
         opacity: 1; }
     .garlic-layout nav .link {
-      font-size: 1.408rem;
       border: none;
       -webkit-transition: all 0.2s ease;
       -moz-transition: all 0.2s ease;
@@ -645,7 +646,7 @@ body {
     .garlic-layout nav .nav-title {
       text-overflow: ellipsis; }
       .garlic-layout nav .nav-title .link {
-        font-size: 2.2528rem;
+        font-size: 1.408rem;
         font-weight: 700; }
   .garlic-layout .table-of-contents .section-link-level-0 {
     padding-left: 0; }
@@ -1028,4 +1029,4 @@ body {
   .garlic-layout #disqus_thread {
     margin-top: 3.9984rem;
     margin-right: 20%;
-    margin-left: 30%; }
+    margin-left: 20%; }

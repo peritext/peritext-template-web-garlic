@@ -45,16 +45,19 @@ class Contents extends Component {
               </div>
               
             }
+            
             {story.metadata.description && 
             <div className="story-description">
               {story.metadata.description}
             </div>}
+
             <div>
               <SectionLink 
                 id={firstSectionId} 
                 title={'Commencer la lecture - ' + firstSectionTitle}
               />
             </div>
+            
           </div>
         </section>
     )

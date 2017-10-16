@@ -25,7 +25,7 @@ const Nav = ({
         left: (dimensions && dimensions.position) ? dimensions.position.left : 0,
         top: (dimensions && dimensions.position) ? dimensions.position.top: 0,
         height: (dimensions && dimensions.height) ? dimensions.height : '100%',
-        width: (dimensions && dimensions.width) ? dimensions.width * .27 : '27%',
+        width: (dimensions && dimensions.width) ? dimensions.width * .2 : '20%',
       }}>
       {toggleIndex && 
         <div 

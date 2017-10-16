@@ -12,7 +12,7 @@ const isBrowser=new Function("try {return this===window;}catch(e){ return false;
 const inBrowser = isBrowser();
 
 if (inBrowser) {
-  ReactPDF = require('react-pdf/build/entry.noworker');
+  ReactPDF = require('react-pdf/build/entry.webpack');
   PDFDocument = ReactPDF.Document;
   PDFPage = ReactPDF.Page;
 }

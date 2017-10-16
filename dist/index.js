@@ -612,6 +612,10 @@ var _inherits2 = __webpack_require__(5);
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
+var _defineProperty2 = __webpack_require__(29);
+
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
@@ -620,23 +624,23 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _redraft = __webpack_require__(29);
+var _redraft = __webpack_require__(30);
 
 var _redraft2 = _interopRequireDefault(_redraft);
 
-var _Link = __webpack_require__(30);
+var _Link = __webpack_require__(31);
 
 var _Link2 = _interopRequireDefault(_Link);
 
-var _BlockAssetWrapper = __webpack_require__(31);
+var _BlockAssetWrapper = __webpack_require__(32);
 
 var _BlockAssetWrapper2 = _interopRequireDefault(_BlockAssetWrapper);
 
-var _InlineAssetWrapper = __webpack_require__(32);
+var _InlineAssetWrapper = __webpack_require__(33);
 
 var _InlineAssetWrapper2 = _interopRequireDefault(_InlineAssetWrapper);
 
-var _NotePointer = __webpack_require__(33);
+var _NotePointer = __webpack_require__(34);
 
 var _NotePointer2 = _interopRequireDefault(_NotePointer);
 
@@ -696,86 +700,88 @@ var renderers = {
    * Note that children are an array of blocks with same styling,
    */
   blocks: {
-    'unstyled': function unstyled(children) {
-      return children.map(function (child) {
-        return _react2.default.createElement(
-          'p',
-          null,
-          child
-        );
-      });
-    },
-    'blockquote': function blockquote(children) {
-      return _react2.default.createElement(
-        'blockquote',
-        null,
-        addBreaklines(children)
-      );
-    },
-    'header-one': function headerOne(children, _ref5) {
+    'unstyled': function unstyled(children, _ref5) {
       var keys = _ref5.keys;
       return children.map(function (child, index) {
         return _react2.default.createElement(
-          'h1',
-          { key: index, id: keys[index] },
+          'p',
+          { id: keys[index], key: index },
           child
         );
       });
     },
-    'header-two': function headerTwo(children, _ref6) {
+    'blockquote': function blockquote(children, _ref6) {
       var keys = _ref6.keys;
-      return children.map(function (child, index) {
-        return _react2.default.createElement(
-          'h2',
-          { key: index, id: keys[index] },
-          child
-        );
-      });
+      return _react2.default.createElement(
+        'blockquote',
+        { id: keys[0] },
+        addBreaklines(children)
+      );
     },
-    'header-three': function headerThree(children, _ref7) {
+    'header-one': function headerOne(children, _ref7) {
       var keys = _ref7.keys;
       return children.map(function (child, index) {
         return _react2.default.createElement(
-          'h3',
-          { key: index, id: keys[index] },
+          'h1',
+          (0, _defineProperty3.default)({ id: keys[index], key: index }, 'id', keys[index]),
           child
         );
       });
     },
-    'header-four': function headerFour(children, _ref8) {
+    'header-two': function headerTwo(children, _ref8) {
       var keys = _ref8.keys;
       return children.map(function (child, index) {
         return _react2.default.createElement(
-          'h4',
-          { key: index, id: keys[index] },
+          'h2',
+          (0, _defineProperty3.default)({ id: keys[index], key: index }, 'id', keys[index]),
           child
         );
       });
     },
-    'header-five': function headerFive(children, _ref9) {
+    'header-three': function headerThree(children, _ref9) {
       var keys = _ref9.keys;
       return children.map(function (child, index) {
         return _react2.default.createElement(
-          'h5',
-          { key: index, id: keys[index] },
+          'h3',
+          (0, _defineProperty3.default)({ id: keys[index], key: index }, 'id', keys[index]),
           child
         );
       });
     },
-    'header-six': function headerSix(children, _ref10) {
+    'header-four': function headerFour(children, _ref10) {
       var keys = _ref10.keys;
       return children.map(function (child, index) {
         return _react2.default.createElement(
+          'h4',
+          (0, _defineProperty3.default)({ id: keys[index], key: index }, 'id', keys[index]),
+          child
+        );
+      });
+    },
+    'header-five': function headerFive(children, _ref11) {
+      var keys = _ref11.keys;
+      return children.map(function (child, index) {
+        return _react2.default.createElement(
+          'h5',
+          (0, _defineProperty3.default)({ id: keys[index], key: index }, 'id', keys[index]),
+          child
+        );
+      });
+    },
+    'header-six': function headerSix(children, _ref12) {
+      var keys = _ref12.keys;
+      return children.map(function (child, index) {
+        return _react2.default.createElement(
           'h6',
-          { key: index, id: keys[index] },
+          (0, _defineProperty3.default)({ id: keys[index], key: index }, 'id', keys[index]),
           child
         );
       });
     },
 
     // You can also access the original keys of the blocks
-    'code-block': function codeBlock(children, _ref11) {
-      var keys = _ref11.keys;
+    'code-block': function codeBlock(children, _ref13) {
+      var keys = _ref13.keys;
       return _react2.default.createElement(
         'pre',
         { key: keys[0] },
@@ -783,9 +789,9 @@ var renderers = {
       );
     },
     // or depth for nested lists
-    'unordered-list-item': function unorderedListItem(children, _ref12) {
-      var depth = _ref12.depth,
-          keys = _ref12.keys;
+    'unordered-list-item': function unorderedListItem(children, _ref14) {
+      var depth = _ref14.depth,
+          keys = _ref14.keys;
       return _react2.default.createElement(
         'ul',
         { key: keys[keys.length - 1], className: 'ul-level-' + depth },
@@ -798,9 +804,9 @@ var renderers = {
         })
       );
     },
-    'ordered-list-item': function orderedListItem(children, _ref13) {
-      var depth = _ref13.depth,
-          keys = _ref13.keys;
+    'ordered-list-item': function orderedListItem(children, _ref15) {
+      var depth = _ref15.depth,
+          keys = _ref15.keys;
       return _react2.default.createElement(
         'ol',
         { key: keys.join('|'), className: 'ol-level-' + depth },
@@ -821,26 +827,26 @@ var renderers = {
    */
   entities: {
     //   // key is the entity key value from raw
-    LINK: function LINK(children, data, _ref14) {
-      var key = _ref14.key;
+    LINK: function LINK(children, data, _ref16) {
+      var key = _ref16.key;
       return _react2.default.createElement(
         _Link2.default,
         { key: key, to: data.url },
         children
       );
     },
-    BLOCK_ASSET: function BLOCK_ASSET(children, data, _ref15) {
-      var key = _ref15.key;
+    BLOCK_ASSET: function BLOCK_ASSET(children, data, _ref17) {
+      var key = _ref17.key;
 
       return _react2.default.createElement(_BlockAssetWrapper2.default, { key: key, data: data });
     },
-    INLINE_ASSET: function INLINE_ASSET(children, data, _ref16) {
-      var key = _ref16.key;
+    INLINE_ASSET: function INLINE_ASSET(children, data, _ref18) {
+      var key = _ref18.key;
 
       return _react2.default.createElement(_InlineAssetWrapper2.default, { data: data, key: key });
     },
-    NOTE_POINTER: function NOTE_POINTER(children, data, _ref17) {
-      var key = _ref17.key;
+    NOTE_POINTER: function NOTE_POINTER(children, data, _ref19) {
+      var key = _ref19.key;
 
       return _react2.default.createElement(_NotePointer2.default, { key: key, children: children, noteId: data.noteId });
     }
@@ -1233,7 +1239,7 @@ var _ContextMention = __webpack_require__(12);
 
 var _ContextMention2 = _interopRequireDefault(_ContextMention);
 
-var _reactAddonsCssTransitionGroup = __webpack_require__(34);
+var _reactAddonsCssTransitionGroup = __webpack_require__(35);
 
 var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 
@@ -1344,7 +1350,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _isNan = __webpack_require__(35);
+var _isNan = __webpack_require__(36);
 
 var _isNan2 = _interopRequireDefault(_isNan);
 
@@ -1376,7 +1382,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _EpubPlayerWrapper = __webpack_require__(36);
+var _EpubPlayerWrapper = __webpack_require__(37);
 
 var _EpubPlayerWrapper2 = _interopRequireDefault(_EpubPlayerWrapper);
 
@@ -1395,7 +1401,7 @@ var isBrowser = new Function("try {return this===window;}catch(e){ return false;
 var inBrowser = isBrowser();
 
 if (inBrowser) {
-  ReactPDF = __webpack_require__(38);
+  ReactPDF = __webpack_require__(39);
   PDFDocument = ReactPDF.Document;
   PDFPage = ReactPDF.Page;
 }
@@ -1735,7 +1741,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _objectWithoutProperties2 = __webpack_require__(39);
+var _objectWithoutProperties2 = __webpack_require__(40);
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
@@ -1938,11 +1944,11 @@ var _Layout = __webpack_require__(9);
 
 var _Layout2 = _interopRequireDefault(_Layout);
 
-var _RelatedContexts = __webpack_require__(40);
+var _RelatedContexts = __webpack_require__(41);
 
 var _RelatedContexts2 = _interopRequireDefault(_RelatedContexts);
 
-var _NotesContainer = __webpack_require__(41);
+var _NotesContainer = __webpack_require__(42);
 
 var _NotesContainer2 = _interopRequireDefault(_NotesContainer);
 
@@ -1960,7 +1966,7 @@ var isBrowser = new Function("try {return this===window;}catch(e){ return false;
 var inBrowser = isBrowser();
 var Comments = void 0;
 if (inBrowser) {
-  Comments = __webpack_require__(43).default;
+  Comments = __webpack_require__(44).default;
 }
 
 var Contents = (_temp = _class = function (_Component) {
@@ -2010,11 +2016,17 @@ var Contents = (_temp = _class = function (_Component) {
 
       if (this.props.query.contextualizationId) {
         this.context.scrollToElementId(this.props.query.contextualizationId);
+      } else if (this.props.query.blockId) {
+        this.context.scrollToElementId(this.props.query.blockId);
       }
       if (this.props.query) {
         setTimeout(function () {
-          return _this2.context.scrollToElementId(_this2.props.query.contextualizationId);
-        }, 2000);
+          if (_this2.props.query.contextualizationId) {
+            _this2.context.scrollToElementId(_this2.props.query.contextualizationId);
+          } else if (_this2.props.query.blockId) {
+            _this2.context.scrollToElementId(_this2.props.query.blockId);
+          }
+        }, 3000);
       }
     }
   }, {
@@ -2489,7 +2501,7 @@ var _Section = __webpack_require__(20);
 
 var _Section2 = _interopRequireDefault(_Section);
 
-var _PreviewLink = __webpack_require__(45);
+var _PreviewLink = __webpack_require__(46);
 
 var _PreviewLink2 = _interopRequireDefault(_PreviewLink);
 
@@ -2660,7 +2672,7 @@ var Nav = function Nav(_ref, _ref2) {
         left: dimensions && dimensions.position ? dimensions.position.left : 0,
         top: dimensions && dimensions.position ? dimensions.position.top : 0,
         height: dimensions && dimensions.height ? dimensions.height : '100%',
-        width: dimensions && dimensions.width ? dimensions.width * .27 : '27%'
+        width: dimensions && dimensions.width ? dimensions.width * .2 : '20%'
       } },
     toggleIndex && _react2.default.createElement(
       'div',
@@ -2750,10 +2762,16 @@ exports.default = Nav;
 /* 29 */
 /***/ (function(module, exports) {
 
-module.exports = require("redraft");
+module.exports = require("babel-runtime/helpers/defineProperty");
 
 /***/ }),
 /* 30 */
+/***/ (function(module, exports) {
+
+module.exports = require("redraft");
+
+/***/ }),
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2812,7 +2830,7 @@ Link.propTypes = {
 exports.default = Link;
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3081,7 +3099,7 @@ BlockAssetWrapper.contextTypes = {
 exports.default = BlockAssetWrapper;
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3177,7 +3195,7 @@ InlineAssetWrapper.contextTypes = {
 exports.default = InlineAssetWrapper;
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3310,19 +3328,19 @@ NotePointer.contextTypes = {
 exports.default = NotePointer;
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-addons-css-transition-group");
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports) {
 
 module.exports = require("babel-runtime/core-js/number/is-nan");
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3357,7 +3375,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactReader = __webpack_require__(37);
+var _reactReader = __webpack_require__(38);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3450,25 +3468,25 @@ var EpubPlayerWrapper = function (_Component) {
 exports.default = EpubPlayerWrapper;
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-reader");
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-pdf/build/entry.webpack");
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports) {
 
 module.exports = require("babel-runtime/helpers/objectWithoutProperties");
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3601,7 +3619,7 @@ RelatedContexts.contextTypes = {
 exports.default = RelatedContexts;
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3639,7 +3657,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _NoteItem = __webpack_require__(42);
+var _NoteItem = __webpack_require__(43);
 
 var _NoteItem2 = _interopRequireDefault(_NoteItem);
 
@@ -3872,7 +3890,7 @@ NotesContainer.contextTypes = {
 exports.default = NotesContainer;
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4018,7 +4036,7 @@ NoteItem.contextTypes = {
 exports.default = NoteItem;
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4062,7 +4080,7 @@ var isBrowser = new Function("try {return this===window;}catch(e){ return false;
 var inBrowser = isBrowser();
 var ReactDisqusComments = void 0;
 if (inBrowser) {
-  ReactDisqusComments = __webpack_require__(44).default;
+  ReactDisqusComments = __webpack_require__(45).default;
 } else {
   ReactDisqusComments = _react2.default.createElement('div', null);
 }
@@ -4147,13 +4165,13 @@ ReactDisqusWrapper.propTypes = {
 exports.default = ReactDisqusWrapper;
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-disqus");
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

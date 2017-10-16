@@ -7,8 +7,10 @@
 $gutter-small: .8rem;
 $gutter-medium: $gutter-small * 1.666;
 $gutter-large: $gutter-medium * 3;
-$nav-width: 30%;
+
+$nav-width: 20%;
 $aside-width: 20%;
+
 $color-primary: #414e4d; // blued dark grey
 $color-secondary: #f32e36; // fresh red
 $color-secondary-intent: #87240e; // bordeaux red
@@ -17,6 +19,7 @@ $color-background-darker: #e7eae1; // cream darkside
 $color-secondary-background: rgba(255,255,255,.8);// white desopacified
 $color-primary-background: #f4f4f4;
 $color-strokes: #dddbd9;
+
 $font-size1: $gutter-small * 1.1;
 $font-size2: $font-size1 * 1.6;
 $font-size3: $font-size2 * 1.6;
@@ -290,14 +293,7 @@ $font-stack-sans-serif: Roboto, serif;
     background: $color-secondary;
 }
 
-body
-{
-    background: $color-background;
-    text-rendering: optimizeLegibility;
-    hyphens: none;
-    widows: 3;
-    orphans: 3;
-}
+
 
 .references-manager
 {
@@ -358,7 +354,13 @@ body
     position: relative;
 
     color: $color-primary;
+    text-align: justify;
     background: $color-background;
+    text-rendering: optimizeLegibility;
+    hyphens: none;
+    widows: 3;
+    orphans: 3;
+
 
     @extend .fixed-fill;
     .section-player
@@ -374,9 +376,9 @@ body
             z-index: 3;
             &.notes-container-position-aside
             {
-                left: $nav-width * .1;
+                left: $nav-width * .2;
 
-                width: $nav-width * .75;
+                width: $nav-width * .65;
 
                 @extend .absolute-fill;
             }
@@ -857,6 +859,7 @@ body
                     border-bottom: none;
                 }
             }
+
             .contents-guttered
             {
                 margin-right: $aside-width;
@@ -892,6 +895,11 @@ body
                     margin-left: $nav-width;
                     // width: 100% - $nav-width - $aside-width;
                 }
+
+                p,
+                li{
+                  line-height: 1.6em;
+                }
             }
         }
     }
@@ -903,6 +911,8 @@ body
 
         width: $nav-width;
         height: 100%;
+        font-size: $font-size2;
+
 
         user-select: none;
         pointer-events: none;
@@ -1000,7 +1010,6 @@ body
         }
         .link
         {
-            font-size: $font-size2;
 
             border: none;
 
@@ -1017,7 +1026,7 @@ body
             text-overflow: ellipsis;
             .link
             {
-                font-size: $font-size3;
+                font-size: $font-size2;
                 font-weight: 700;
             }
         }
