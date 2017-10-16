@@ -1,6 +1,6 @@
 {
   "name": "peritext-template-web-garlic",
-  "version": "0.0.34",
+  "version": "0.0.35",
   "description": "Garlic template for web outputs (rendering with react)",
   "main": "dist/index.js",
   "scripts": {
