@@ -62,11 +62,10 @@ const RelatedContexts = ({
           <Citation resource={resource} />
         }
       </div>
-      {related.length ? 
+      {related.length ? <ul className="body">
         <h3>
           Cette ressource est aussi contextualisée dans :
-        </h3> : null}
-      {related.length ? <ul className="body">
+        </h3>
         {
           related
           .filter(contextualization => contextualization.targetContents !== undefined)
