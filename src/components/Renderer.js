@@ -2,10 +2,20 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import redraft from 'redraft';
 import Link from './Link';
+import {constants} from 'peritext-core';
 
 import BlockAssetWrapper from './BlockAssetWrapper';
 import InlineAssetWrapper from './InlineAssetWrapper';
 import NotePointer from './NotePointer';
+import SectionLink from './SectionLink';
+
+const {
+  LINK,
+  BLOCK_ASSET,
+  INLINE_ASSET,
+  SECTION_POINTER,
+  NOTE_POINTER,
+} = constants.draftEntitiesNames;
 
 
 // just a helper to add a <br /> after each block
@@ -52,16 +62,19 @@ const renderers = {
    */
   entities: {
   //   // key is the entity key value from raw
-    LINK: (children, data, {key}) =>
+    [LINK]: (children, data, {key}) =>
       <Link key={key} to={data.url}>{children}</Link>,
-    BLOCK_ASSET: (children, data, {key}) => {
+    [BLOCK_ASSET]: (children, data, {key}) => {
       return <BlockAssetWrapper key={key} data={data} />;
     },
-    INLINE_ASSET: (children, data, {key}) => {
+    [INLINE_ASSET]: (children, data, {key}) => {
       return <InlineAssetWrapper data={data} key={key} />;
     },
-    NOTE_POINTER: (children, data, {key}) => {
+    [NOTE_POINTER]: (children, data, {key}) => {
       return <NotePointer key={key} children={children} noteId={data.noteId} />;
+    },
+    [SECTION_POINTER]: (children, data, {key}) => {
+      return <SectionLink key={key} children={children} id={data.sectionId} title={children.concat('•')} />;
     },
   },
 };

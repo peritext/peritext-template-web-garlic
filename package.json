@@ -1,6 +1,6 @@
 {
   "name": "peritext-template-web-garlic",
-  "version": "0.0.35",
+  "version": "0.0.36",
   "description": "Garlic template for web outputs (rendering with react)",
   "main": "dist/index.js",
   "scripts": {
@@ -15,6 +15,7 @@
     "react": "^15.6.1"
   },
   "dependencies": {
+    "peritext-core": "git+https://github.com/peritext/peritext-core.git",
     "peritext-rendering-utils": "0.0.18",
     "quinoa-presentation-player": "^0.2.4",
     "react-addons-css-transition-group": "^15.6.0",

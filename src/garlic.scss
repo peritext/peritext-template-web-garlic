@@ -4,7 +4,7 @@
  */
 
 // 1. variables
-$gutter-small: .8rem;
+$gutter-small: .9rem;
 $gutter-medium: $gutter-small * 1.666;
 $gutter-large: $gutter-medium * 3;
 
@@ -20,11 +20,11 @@ $color-secondary-background: rgba(255,255,255,.8);// white desopacified
 $color-primary-background: #f4f4f4;
 $color-strokes: #dddbd9;
 
-$font-size1: $gutter-small * 1.1;
-$font-size2: $font-size1 * 1.6;
-$font-size3: $font-size2 * 1.6;
-$font-size4: $font-size3 * 1.6;
-$font-size5: $font-size4 * 1.6;
+$font-size1: $gutter-small * 1.3;
+$font-size2: $font-size1 * 1.3;
+$font-size3: $font-size2 * 1.3;
+$font-size4: $font-size3 * 1.3;
+$font-size5: $font-size4 * 1.3;
 $burger-measure: $font-size2;
 
 // fonts
@@ -354,7 +354,6 @@ $font-stack-sans-serif: Roboto, serif;
     position: relative;
 
     color: $color-primary;
-    text-align: justify;
     background: $color-background;
     text-rendering: optimizeLegibility;
     hyphens: none;
@@ -363,6 +362,7 @@ $font-stack-sans-serif: Roboto, serif;
 
 
     @extend .fixed-fill;
+
     .section-player
     {
         position: relative;
@@ -882,7 +882,7 @@ $font-stack-sans-serif: Roboto, serif;
                 font-family: $font-stack-sans-serif;
                 font-size: $font-size5;
 
-                margin-top: 0;
+                margin-top: $gutter-medium;
                 margin-right: $aside-width;
                 margin-left: $nav-width;
             }
@@ -1569,8 +1569,8 @@ $font-stack-sans-serif: Roboto, serif;
 
         display: inline-block;
 
-        width: $font-size2 * .6;
-        height: $font-size2 * .6;
+        width: $font-size2 * .7;
+        height: $font-size2 * .7;
 
         cursor: pointer;
         text-align: center;
@@ -1588,7 +1588,7 @@ $font-stack-sans-serif: Roboto, serif;
     .note-content-pointer
     {
         font-size: $font-size1;
-        line-height: $font-size1 * 2;
+        line-height: $font-size1 * 1.5;
 
         display: inline-block;
 
