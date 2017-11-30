@@ -1,6 +1,6 @@
 {
   "name": "peritext-template-web-garlic",
-  "version": "0.0.38",
+  "version": "0.0.39",
   "description": "Garlic template for web outputs (rendering with react)",
   "main": "dist/index.js",
   "scripts": {
@@ -62,8 +62,8 @@
     "peritext-contextualizer-vegalite": "0.0.9",
     "peritext-contextualizer-video": "0.0.8",
     "peritext-contextualizer-webpage": "0.0.8",
-    "peritext-generator-epub": "0.0.9",
-    "peritext-generator-pdf": "0.0.4",
+    "peritext-generator-epub": "0.0.10",
+    "peritext-generator-pdf": "0.0.5",
     "peritext-template-codex-garlic": "0.0.33",
     "raw-loader": "^0.5.1",
     "sass-loader": "^6.0.6",

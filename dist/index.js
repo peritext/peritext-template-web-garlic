@@ -129,7 +129,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _keys = __webpack_require__(10);
+var _keys = __webpack_require__(11);
 
 var _keys2 = _interopRequireDefault(_keys);
 
@@ -424,7 +424,7 @@ var Layout = (_temp = _class = function (_Component) {
       _react2.default.createElement(
         'style',
         null,
-        story.settings.css && story.settings.css.codex ? story.settings.css.codex : ''
+        story.settings.css && story.settings.css.web && story.settings.css.web.css ? story.settings.css.web.css : ''
       )
     );
   };
@@ -453,12 +453,6 @@ exports.default = (0, _reactSizeme2.default)({
 
 /***/ }),
 /* 10 */
-/***/ (function(module, exports) {
-
-module.exports = require("babel-runtime/core-js/object/keys");
-
-/***/ }),
-/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -508,6 +502,12 @@ SectionLink.contextTypes = {
 };
 
 /***/ }),
+/* 11 */
+/***/ (function(module, exports) {
+
+module.exports = require("babel-runtime/core-js/object/keys");
+
+/***/ }),
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -526,7 +526,7 @@ var _Renderer = __webpack_require__(13);
 
 var _Renderer2 = _interopRequireDefault(_Renderer);
 
-var _SectionLink = __webpack_require__(11);
+var _SectionLink = __webpack_require__(10);
 
 var _SectionLink2 = _interopRequireDefault(_SectionLink);
 
@@ -616,6 +616,8 @@ var _defineProperty2 = __webpack_require__(29);
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
+var _entities;
+
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
@@ -632,21 +634,35 @@ var _Link = __webpack_require__(31);
 
 var _Link2 = _interopRequireDefault(_Link);
 
-var _BlockAssetWrapper = __webpack_require__(32);
+var _peritextCore = __webpack_require__(32);
+
+var _BlockAssetWrapper = __webpack_require__(33);
 
 var _BlockAssetWrapper2 = _interopRequireDefault(_BlockAssetWrapper);
 
-var _InlineAssetWrapper = __webpack_require__(33);
+var _InlineAssetWrapper = __webpack_require__(34);
 
 var _InlineAssetWrapper2 = _interopRequireDefault(_InlineAssetWrapper);
 
-var _NotePointer = __webpack_require__(34);
+var _NotePointer = __webpack_require__(35);
 
 var _NotePointer2 = _interopRequireDefault(_NotePointer);
 
+var _SectionLink = __webpack_require__(10);
+
+var _SectionLink2 = _interopRequireDefault(_SectionLink);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var _constants$draftEntit = _peritextCore.constants.draftEntitiesNames,
+    LINK = _constants$draftEntit.LINK,
+    BLOCK_ASSET = _constants$draftEntit.BLOCK_ASSET,
+    INLINE_ASSET = _constants$draftEntit.INLINE_ASSET,
+    SECTION_POINTER = _constants$draftEntit.SECTION_POINTER,
+    NOTE_POINTER = _constants$draftEntit.NOTE_POINTER;
+
 // just a helper to add a <br /> after each block
+
 var addBreaklines = function addBreaklines(children) {
   return children.map(function (child) {
     return [child, _react2.default.createElement('br', null)];
@@ -825,32 +841,30 @@ var renderers = {
   /**
    * Entities receive children and the entity data
    */
-  entities: {
-    //   // key is the entity key value from raw
-    LINK: function LINK(children, data, _ref16) {
-      var key = _ref16.key;
-      return _react2.default.createElement(
-        _Link2.default,
-        { key: key, to: data.url },
-        children
-      );
-    },
-    BLOCK_ASSET: function BLOCK_ASSET(children, data, _ref17) {
-      var key = _ref17.key;
+  entities: (_entities = {}, (0, _defineProperty3.default)(_entities, LINK, function (children, data, _ref16) {
+    var key = _ref16.key;
+    return _react2.default.createElement(
+      _Link2.default,
+      { key: key, to: data.url },
+      children
+    );
+  }), (0, _defineProperty3.default)(_entities, BLOCK_ASSET, function (children, data, _ref17) {
+    var key = _ref17.key;
 
-      return _react2.default.createElement(_BlockAssetWrapper2.default, { key: key, data: data });
-    },
-    INLINE_ASSET: function INLINE_ASSET(children, data, _ref18) {
-      var key = _ref18.key;
+    return _react2.default.createElement(_BlockAssetWrapper2.default, { key: key, data: data });
+  }), (0, _defineProperty3.default)(_entities, INLINE_ASSET, function (children, data, _ref18) {
+    var key = _ref18.key;
 
-      return _react2.default.createElement(_InlineAssetWrapper2.default, { data: data, key: key });
-    },
-    NOTE_POINTER: function NOTE_POINTER(children, data, _ref19) {
-      var key = _ref19.key;
+    return _react2.default.createElement(_InlineAssetWrapper2.default, { data: data, key: key });
+  }), (0, _defineProperty3.default)(_entities, NOTE_POINTER, function (children, data, _ref19) {
+    var key = _ref19.key;
 
-      return _react2.default.createElement(_NotePointer2.default, { key: key, children: children, noteId: data.noteId });
-    }
-  }
+    return _react2.default.createElement(_NotePointer2.default, { key: key, children: children, noteId: data.noteId });
+  }), (0, _defineProperty3.default)(_entities, SECTION_POINTER, function (children, data, _ref20) {
+    var key = _ref20.key;
+
+    return _react2.default.createElement(_SectionLink2.default, { key: key, children: children, id: data.sectionId, title: children.concat('•') });
+  }), _entities)
 };
 
 /**
@@ -984,7 +998,7 @@ var _Layout = __webpack_require__(9);
 
 var _Layout2 = _interopRequireDefault(_Layout);
 
-var _SectionLink = __webpack_require__(11);
+var _SectionLink = __webpack_require__(10);
 
 var _SectionLink2 = _interopRequireDefault(_SectionLink);
 
@@ -1239,7 +1253,7 @@ var _ContextMention = __webpack_require__(12);
 
 var _ContextMention2 = _interopRequireDefault(_ContextMention);
 
-var _reactAddonsCssTransitionGroup = __webpack_require__(35);
+var _reactAddonsCssTransitionGroup = __webpack_require__(36);
 
 var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 
@@ -1350,7 +1364,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _isNan = __webpack_require__(36);
+var _isNan = __webpack_require__(37);
 
 var _isNan2 = _interopRequireDefault(_isNan);
 
@@ -1382,7 +1396,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _EpubPlayerWrapper = __webpack_require__(37);
+var _EpubPlayerWrapper = __webpack_require__(38);
 
 var _EpubPlayerWrapper2 = _interopRequireDefault(_EpubPlayerWrapper);
 
@@ -1401,7 +1415,7 @@ var isBrowser = new Function("try {return this===window;}catch(e){ return false;
 var inBrowser = isBrowser();
 
 if (inBrowser) {
-  ReactPDF = __webpack_require__(39);
+  ReactPDF = __webpack_require__(40);
   PDFDocument = ReactPDF.Document;
   PDFPage = ReactPDF.Page;
 }
@@ -1741,7 +1755,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _objectWithoutProperties2 = __webpack_require__(40);
+var _objectWithoutProperties2 = __webpack_require__(41);
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
@@ -1904,7 +1918,7 @@ var _extends2 = __webpack_require__(7);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _keys = __webpack_require__(10);
+var _keys = __webpack_require__(11);
 
 var _keys2 = _interopRequireDefault(_keys);
 
@@ -1944,15 +1958,15 @@ var _Layout = __webpack_require__(9);
 
 var _Layout2 = _interopRequireDefault(_Layout);
 
-var _RelatedContexts = __webpack_require__(41);
+var _RelatedContexts = __webpack_require__(42);
 
 var _RelatedContexts2 = _interopRequireDefault(_RelatedContexts);
 
-var _NotesContainer = __webpack_require__(42);
+var _NotesContainer = __webpack_require__(43);
 
 var _NotesContainer2 = _interopRequireDefault(_NotesContainer);
 
-var _SectionLink = __webpack_require__(11);
+var _SectionLink = __webpack_require__(10);
 
 var _SectionLink2 = _interopRequireDefault(_SectionLink);
 
@@ -1966,7 +1980,7 @@ var isBrowser = new Function("try {return this===window;}catch(e){ return false;
 var inBrowser = isBrowser();
 var Comments = void 0;
 if (inBrowser) {
-  Comments = __webpack_require__(44).default;
+  Comments = __webpack_require__(45).default;
 }
 
 var Contents = (_temp = _class = function (_Component) {
@@ -2501,7 +2515,7 @@ var _Section = __webpack_require__(20);
 
 var _Section2 = _interopRequireDefault(_Section);
 
-var _PreviewLink = __webpack_require__(46);
+var _PreviewLink = __webpack_require__(47);
 
 var _PreviewLink2 = _interopRequireDefault(_PreviewLink);
 
@@ -2629,7 +2643,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _keys = __webpack_require__(10);
+var _keys = __webpack_require__(11);
 
 var _keys2 = _interopRequireDefault(_keys);
 
@@ -2641,7 +2655,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _SectionLink = __webpack_require__(11);
+var _SectionLink = __webpack_require__(10);
 
 var _SectionLink2 = _interopRequireDefault(_SectionLink);
 
@@ -2831,6 +2845,12 @@ exports.default = Link;
 
 /***/ }),
 /* 32 */
+/***/ (function(module, exports) {
+
+module.exports = require("peritext-core");
+
+/***/ }),
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3099,7 +3119,7 @@ BlockAssetWrapper.contextTypes = {
 exports.default = BlockAssetWrapper;
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3195,7 +3215,7 @@ InlineAssetWrapper.contextTypes = {
 exports.default = InlineAssetWrapper;
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3328,19 +3348,19 @@ NotePointer.contextTypes = {
 exports.default = NotePointer;
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-addons-css-transition-group");
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports) {
 
 module.exports = require("babel-runtime/core-js/number/is-nan");
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3375,7 +3395,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactReader = __webpack_require__(38);
+var _reactReader = __webpack_require__(39);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3468,25 +3488,25 @@ var EpubPlayerWrapper = function (_Component) {
 exports.default = EpubPlayerWrapper;
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-reader");
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-pdf/build/entry.webpack");
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports) {
 
 module.exports = require("babel-runtime/helpers/objectWithoutProperties");
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3500,7 +3520,7 @@ var _extends2 = __webpack_require__(7);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _keys = __webpack_require__(10);
+var _keys = __webpack_require__(11);
 
 var _keys2 = _interopRequireDefault(_keys);
 
@@ -3580,13 +3600,13 @@ var RelatedContexts = function RelatedContexts(_ref, _ref2) {
       Citation && _react2.default.createElement(Citation, { resource: resource })
     ),
     related.length ? _react2.default.createElement(
-      'h3',
-      null,
-      'Cette ressource est aussi contextualis\xE9e dans :'
-    ) : null,
-    related.length ? _react2.default.createElement(
       'ul',
       { className: 'body' },
+      _react2.default.createElement(
+        'h3',
+        null,
+        'Cette ressource est aussi contextualis\xE9e dans :'
+      ),
       related.filter(function (contextualization) {
         return contextualization.targetContents !== undefined;
       }).map(function (contextualization) {
@@ -3619,7 +3639,7 @@ RelatedContexts.contextTypes = {
 exports.default = RelatedContexts;
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3657,7 +3677,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _NoteItem = __webpack_require__(43);
+var _NoteItem = __webpack_require__(44);
 
 var _NoteItem2 = _interopRequireDefault(_NoteItem);
 
@@ -3890,7 +3910,7 @@ NotesContainer.contextTypes = {
 exports.default = NotesContainer;
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3998,7 +4018,7 @@ var NoteItem = function (_Component) {
           { onClick: onClick, className: 'note-block-pointer', id: 'note-block-pointer-' + note.id },
           note.finalOrder
         ),
-        _react2.default.createElement(_Renderer2.default, { raw: note.editorState })
+        _react2.default.createElement(_Renderer2.default, { raw: note.contents })
       );
     }
   }]);
@@ -4036,7 +4056,7 @@ NoteItem.contextTypes = {
 exports.default = NoteItem;
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4080,7 +4100,7 @@ var isBrowser = new Function("try {return this===window;}catch(e){ return false;
 var inBrowser = isBrowser();
 var ReactDisqusComments = void 0;
 if (inBrowser) {
-  ReactDisqusComments = __webpack_require__(45).default;
+  ReactDisqusComments = __webpack_require__(46).default;
 } else {
   ReactDisqusComments = _react2.default.createElement('div', null);
 }
@@ -4165,13 +4185,13 @@ ReactDisqusWrapper.propTypes = {
 exports.default = ReactDisqusWrapper;
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-disqus");
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
