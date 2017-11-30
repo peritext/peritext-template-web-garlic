@@ -1,6 +1,6 @@
 {
   "name": "peritext-template-web-garlic",
-  "version": "0.0.36",
+  "version": "0.0.38",
   "description": "Garlic template for web outputs (rendering with react)",
   "main": "dist/index.js",
   "scripts": {
@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "peritext-core": "git+https://github.com/peritext/peritext-core.git",
-    "peritext-rendering-utils": "0.0.18",
+    "peritext-rendering-utils": "0.0.19",
     "quinoa-presentation-player": "^0.2.4",
     "react-addons-css-transition-group": "^15.6.0",
     "react-citeproc": "^0.1.7",
@@ -26,9 +26,9 @@
     "react-reader": "^0.16.0",
     "react-sizeme": "^2.3.4",
     "rebound": "0.0.15",
-    "redraft": "^0.8.0",
-    "typeface-merriweather": "0.0.35",
-    "typeface-roboto": "0.0.35"
+    "redraft": "^0.9.0",
+    "typeface-merriweather": "0.0.45",
+    "typeface-roboto": "0.0.45"
   },
   "devDependencies": {
     "@storybook/addon-options": "^3.2.3",
@@ -53,18 +53,18 @@
     "peritext-contextualizer-bib": "0.0.12",
     "peritext-contextualizer-codefiles": "0.0.8",
     "peritext-contextualizer-data-presentation": "0.0.8",
-    "peritext-contextualizer-dicto": "0.0.11",
+    "peritext-contextualizer-dicto": "0.0.14",
     "peritext-contextualizer-embed": "0.0.6",
     "peritext-contextualizer-glossary": "0.0.6",
     "peritext-contextualizer-image": "0.0.5",
     "peritext-contextualizer-p5": "0.0.6",
-    "peritext-contextualizer-table": "0.0.4",
+    "peritext-contextualizer-table": "0.0.5",
     "peritext-contextualizer-vegalite": "0.0.9",
     "peritext-contextualizer-video": "0.0.8",
     "peritext-contextualizer-webpage": "0.0.8",
-    "peritext-generator-epub": "0.0.7",
-    "peritext-generator-pdf": "0.0.3",
-    "peritext-template-codex-garlic": "0.0.27",
+    "peritext-generator-epub": "0.0.9",
+    "peritext-generator-pdf": "0.0.4",
+    "peritext-template-codex-garlic": "0.0.33",
     "raw-loader": "^0.5.1",
     "sass-loader": "^6.0.6",
     "storybook": "1.0.0",

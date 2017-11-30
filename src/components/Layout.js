@@ -225,7 +225,7 @@ class Layout extends Component {
           </section>
         }
         <style>
-          {story.settings.css && story.settings.css.codex ? story.settings.css.codex : ''}
+          {story.settings.css && story.settings.css.web && story.settings.css.web.css ? story.settings.css.web.css : ''}
         </style>
       </ReferencesManager>
     );
