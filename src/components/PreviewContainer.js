@@ -19,6 +19,7 @@ export default class PreviewContainer extends Component {
 
   getChildContext = () => ({
     story: this.props.story,
+    datasets: this.props.story.datasets,
     activeViewId: this.state.viewId,
     navigateTo: this.navigateTo,
     LinkComponent: PreviewLink,
@@ -79,6 +80,7 @@ PreviewContainer.childContextTypes = {
   navigateTo: PropTypes.func,
   LinkComponent: PropTypes.func,
   story: PropTypes.object,
+  datasets: PropTypes.object,
   contextualizers: PropTypes.object,
   rawCitations: PropTypes.object,
   locale: PropTypes.object,

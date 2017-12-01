@@ -2532,6 +2532,7 @@ var PreviewContainer = function (_Component) {
     _this.getChildContext = function () {
       return {
         story: _this.props.story,
+        datasets: _this.props.story.datasets,
         activeViewId: _this.state.viewId,
         navigateTo: _this.navigateTo,
         LinkComponent: _PreviewLink2.default,
@@ -2603,6 +2604,7 @@ PreviewContainer.childContextTypes = {
   navigateTo: _propTypes2.default.func,
   LinkComponent: _propTypes2.default.func,
   story: _propTypes2.default.object,
+  datasets: _propTypes2.default.object,
   contextualizers: _propTypes2.default.object,
   rawCitations: _propTypes2.default.object,
   locale: _propTypes2.default.object
